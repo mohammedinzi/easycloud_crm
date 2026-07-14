@@ -200,6 +200,8 @@ fixtures = [
 # 	"Task": "easycloud_crm.task.get_dashboard_data"
 # }
 
+override_doctype_dashboards = {"Lead": "easycloud_crm.dashboard.get_lead_dashboard_data"}
+
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
