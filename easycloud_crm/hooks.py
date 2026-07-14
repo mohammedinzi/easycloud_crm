@@ -5,6 +5,21 @@ app_description = "Manage Easycloud CRM"
 app_email = "minzemam007@gmail.com"
 app_license = "mit"
 
+# Fixtures
+# ------------------
+# data that should ship with the app instead of living only in this database
+
+fixtures = [
+	{
+		"doctype": "Custom Field",
+		"filters": [["name", "in", ["Task-custom_lead", "Task-custom_deal"]]],
+	},
+	{
+		"doctype": "Lead Source",
+		"filters": [["name", "in", ["Website", "Instagram", "Referral", "LinkedIn", "WhatsApp", "Email"]]],
+	},
+]
+
 # Apps
 # ------------------
 
@@ -246,4 +261,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

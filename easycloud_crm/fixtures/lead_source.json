@@ -1,0 +1,50 @@
+[
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-14 11:37:01.623265",
+  "name": "Website",
+  "source_name": "Website"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-14 11:37:01.633048",
+  "name": "Instagram",
+  "source_name": "Instagram"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-14 11:37:01.634283",
+  "name": "Referral",
+  "source_name": "Referral"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-14 11:37:01.635510",
+  "name": "LinkedIn",
+  "source_name": "LinkedIn"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-14 11:37:01.636723",
+  "name": "WhatsApp",
+  "source_name": "WhatsApp"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-14 11:37:01.637782",
+  "name": "Email",
+  "source_name": "Email"
+ }
+]
