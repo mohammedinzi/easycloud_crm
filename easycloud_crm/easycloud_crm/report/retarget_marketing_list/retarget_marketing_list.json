@@ -12,7 +12,7 @@
  "is_standard": "Yes",
  "json": "{\"columns\": [[\"company_name\", \"Deal\"], [\"contact_email\", \"Deal\"], [\"contact_phone\", \"Deal\"], [\"lost_reason\", \"Deal\"], [\"deal_name\", \"Deal\"], [\"modified\", \"Deal\"]], \"filters\": [[\"Deal\", \"stage\", \"=\", \"Lost\"], [\"Deal\", \"retarget_status\", \"=\", \"Eligible\"]]}",
  "letter_head": null,
- "modified": "2026-07-14 13:20:25.056266",
+ "modified": "2026-07-14 13:22:05.636436",
  "modified_by": "Administrator",
  "module": "Easycloud CRM",
  "name": "Retarget Marketing List",
@@ -30,6 +30,9 @@
   },
   {
    "role": "Sales Manager"
+  },
+  {
+   "role": "Marketing User"
   }
  ],
  "timeout": 0

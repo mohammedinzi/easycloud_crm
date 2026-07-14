@@ -18,6 +18,10 @@ fixtures = [
 		"doctype": "Lead Source",
 		"filters": [["name", "in", ["Website", "Instagram", "Referral", "LinkedIn", "WhatsApp", "Email"]]],
 	},
+	{
+		"doctype": "Role",
+		"filters": [["name", "=", "Marketing User"]],
+	},
 ]
 
 # Apps
