@@ -1,0 +1,76 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"6a44e6f71d\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Pipeline</b></span>\", \"col\": 12}}, {\"id\": \"82932b4a21\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Lead\", \"col\": 3}}, {\"id\": \"881b5aa6fc\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Deal\", \"col\": 3}}, {\"id\": \"f39a1edcc9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"CRM Activity\", \"col\": 3}}, {\"id\": \"f5c6b9e5f2\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Task\", \"col\": 3}}, {\"id\": \"c6cfcce80c\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project\", \"col\": 3}}, {\"id\": \"dc24d21c50\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Deal Pipeline\", \"col\": 3}}]",
+ "creation": "2026-07-14 11:44:15.797742",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "icon": "crm",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "EasyCloud CRM",
+ "links": [],
+ "modified": "2026-07-14 11:44:15.797742",
+ "modified_by": "Administrator",
+ "module": "Easycloud CRM",
+ "name": "EasyCloud CRM",
+ "number_cards": [],
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 0.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "kanban_board": "",
+   "label": "Lead",
+   "link_to": "Lead",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "kanban_board": "",
+   "label": "Deal",
+   "link_to": "Deal",
+   "type": "DocType"
+  },
+  {
+   "color": "Yellow",
+   "doc_view": "List",
+   "kanban_board": "",
+   "label": "CRM Activity",
+   "link_to": "CRM Activity",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "kanban_board": "",
+   "label": "Task",
+   "link_to": "Task",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "List",
+   "kanban_board": "",
+   "label": "Project",
+   "link_to": "Project",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "Kanban",
+   "kanban_board": "Deal Pipeline",
+   "label": "Deal Pipeline",
+   "link_to": "Deal",
+   "type": "DocType"
+  }
+ ],
+ "title": "EasyCloud CRM"
+}
