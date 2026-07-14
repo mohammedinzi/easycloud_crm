@@ -22,6 +22,14 @@ fixtures = [
 		"doctype": "Role",
 		"filters": [["name", "=", "Marketing User"]],
 	},
+	{
+		"doctype": "Property Setter",
+		"filters": [
+			["doc_type", "=", "User"],
+			["field_name", "=", "default_workspace"],
+			["property", "=", "default"],
+		],
+	},
 ]
 
 # Apps

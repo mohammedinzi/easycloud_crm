@@ -1,0 +1,18 @@
+[
+ {
+  "default_value": null,
+  "doc_type": "User",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "default_workspace",
+  "is_system_generated": 1,
+  "modified": "2026-07-14 16:13:16.303797",
+  "module": null,
+  "name": "User-default_workspace-default",
+  "property": "default",
+  "property_type": "Link",
+  "row_name": null,
+  "value": "EasyCloud CRM"
+ }
+]
