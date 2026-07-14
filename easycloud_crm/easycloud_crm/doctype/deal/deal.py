@@ -6,6 +6,10 @@ from frappe.model.document import Document
 
 
 class Deal(Document):
+	def validate(self):
+		if self.stage == "Lost" and not self.lost_reason:
+			frappe.throw("Select a Lost Reason before marking this Deal as Lost.")
+
 	def on_update(self):
 		if self.stage == "Won" and self.has_value_changed("stage"):
 			self.convert_to_customer_and_project()

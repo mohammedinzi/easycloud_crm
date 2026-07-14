@@ -16,7 +16,14 @@
   "expected_close_date",
   "notes",
   "deal_owner",
-  "project"
+  "project",
+  "lost_retargeting_section",
+  "lost_reason",
+  "retarget_status",
+  "column_break_lost_retargeting",
+  "company_name",
+  "contact_email",
+  "contact_phone"
  ],
  "fields": [
   {
@@ -77,6 +84,49 @@
    "fieldtype": "Link",
    "label": "Project",
    "options": "Project",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lost_retargeting_section",
+   "fieldtype": "Section Break",
+   "label": "Lost / Retargeting"
+  },
+  {
+   "depends_on": "eval:doc.stage==\"Lost\"",
+   "fieldname": "lost_reason",
+   "fieldtype": "Select",
+   "label": "Lost Reason",
+   "options": "\nPrice\nCompetitor\nBudget\nNo Response"
+  },
+  {
+   "fieldname": "retarget_status",
+   "fieldtype": "Select",
+   "label": "Retarget Status",
+   "options": "\nEligible\nNot Eligible"
+  },
+  {
+   "fieldname": "column_break_lost_retargeting",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "lead.company_name",
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "label": "Company",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "lead.email_id",
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "lead.mobile_no",
+   "fieldname": "contact_phone",
+   "fieldtype": "Data",
+   "label": "Contact Phone",
    "read_only": 1
   }
  ],
