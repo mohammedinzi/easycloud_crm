@@ -53,7 +53,7 @@ fixtures = [
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/easycloud_crm/css/easycloud_crm.css"
-# app_include_js = "/assets/easycloud_crm/js/easycloud_crm.js"
+app_include_js = "/assets/easycloud_crm/js/voice_note.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/easycloud_crm/css/easycloud_crm.css"
