@@ -15,9 +15,13 @@ class Deal(Document):
 			self.convert_to_customer_and_project()
 
 	def convert_to_customer_and_project(self):
+		company_name = (
+			frappe.db.get_value("Lead", self.lead, "company_name") if self.lead else None
+		) or self.deal_name
+
 		if not self.customer:
 			customer = frappe.new_doc("Customer")
-			customer.customer_name = self.deal_name
+			customer.customer_name = company_name
 			customer.insert(ignore_permissions=True)
 			self.db_set("customer", customer.name)
 		else:
@@ -25,7 +29,7 @@ class Deal(Document):
 
 		if not self.project:
 			project = frappe.new_doc("Project")
-			project.project_name = self.deal_name
+			project.project_name = company_name
 			project.customer = customer.name
 			project.insert(ignore_permissions=True)
 			self.db_set("project", project.name)
@@ -43,4 +47,4 @@ class Deal(Document):
 				task.custom_deal = self.name
 				task.insert(ignore_permissions=True)
 
-			frappe.msgprint(f"Customer and Project created for {self.deal_name}")
+			frappe.msgprint(f"Customer and Project created for {company_name}")
