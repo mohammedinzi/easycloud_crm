@@ -1,6 +1,22 @@
 [
  {
   "default_value": null,
+  "doc_type": "Lead",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "is_system_generated": 1,
+  "modified": "2026-07-16 17:30:04.477633",
+  "module": null,
+  "name": "Lead-main-show_title_field_in_link",
+  "property": "show_title_field_in_link",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
   "doc_type": "User",
   "docstatus": 0,
   "doctype": "Property Setter",

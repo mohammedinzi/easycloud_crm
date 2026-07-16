@@ -12,11 +12,17 @@ app_license = "mit"
 fixtures = [
 	{
 		"doctype": "Custom Field",
-		"filters": [["name", "in", ["Task-custom_lead", "Task-custom_deal"]]],
+		"filters": [["name", "in", ["Task-custom_lead", "Task-custom_deal", "Lead-source_received_date"]]],
 	},
 	{
 		"doctype": "Lead Source",
-		"filters": [["name", "in", ["Website", "Instagram", "Referral", "LinkedIn", "WhatsApp", "Email"]]],
+		"filters": [
+			[
+				"name",
+				"in",
+				["Website", "Instagram", "Referral", "LinkedIn", "WhatsApp", "Email", "Partners for Sales"],
+			]
+		],
 	},
 	{
 		"doctype": "Role",
@@ -24,11 +30,7 @@ fixtures = [
 	},
 	{
 		"doctype": "Property Setter",
-		"filters": [
-			["doc_type", "=", "User"],
-			["field_name", "=", "default_workspace"],
-			["property", "=", "default"],
-		],
+		"filters": [["name", "in", ["User-default_workspace-default", "Lead-main-show_title_field_in_link"]]],
 	},
 ]
 

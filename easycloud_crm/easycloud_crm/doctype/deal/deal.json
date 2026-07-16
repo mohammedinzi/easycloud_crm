@@ -12,6 +12,7 @@
   "lead",
   "customer",
   "stage",
+  "last_contacted_on",
   "numbers_section",
   "amount",
   "probability",
@@ -62,6 +63,12 @@
    "options": "New\nContacted\nQualified\nProposal\nNegotiation\nWon\nLost"
   },
   {
+   "fieldname": "last_contacted_on",
+   "fieldtype": "Datetime",
+   "label": "Last Contacted",
+   "read_only": 1
+  },
+  {
    "fieldname": "numbers_section",
    "fieldtype": "Section Break",
    "label": "Numbers"
@@ -91,7 +98,7 @@
    "fieldname": "lost_reason",
    "fieldtype": "Select",
    "label": "Lost Reason",
-   "options": "\nPrice\nCompetitor\nBudget\nNo Response"
+   "options": "\nPrice\nCompetitor\nBudget\nNo Response\nToo Big for Us\nToo Small for Us"
   },
   {
    "fieldname": "retarget_status",
@@ -205,5 +212,6 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "deal_name"
+ "title_field": "deal_name",
+ "track_changes": 1
 }

@@ -24,6 +24,15 @@ class CRMActivity(Document):
 				activity_name=self.name,
 			)
 
+		if self.deal and self.date:
+			self.update_deal_last_contacted()
+
+	def update_deal_last_contacted(self):
+		current = frappe.db.get_value("Deal", self.deal, "last_contacted_on")
+		new_date = frappe.utils.get_datetime(self.date)
+		if not current or new_date > frappe.utils.get_datetime(current):
+			frappe.db.set_value("Deal", self.deal, "last_contacted_on", new_date)
+
 
 def transcribe_voice_note(activity_name):
 	activity = frappe.get_doc("CRM Activity", activity_name)

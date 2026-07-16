@@ -3,6 +3,14 @@
   "details": null,
   "docstatus": 0,
   "doctype": "Lead Source",
+  "modified": "2026-07-16 17:28:00.569481",
+  "name": "Partners for Sales",
+  "source_name": "Partners for Sales"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
   "modified": "2026-07-14 11:37:01.623265",
   "name": "Website",
   "source_name": "Website"
