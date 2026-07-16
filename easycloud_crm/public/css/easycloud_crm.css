@@ -2,3 +2,25 @@
  * easycloud_crm component styles: Kanban board stage accents, dashboard
  * card icons, activity-type icons. Built on top of the tokens in theme.css.
  */
+
+/* Phase 35: Number Card icons on the Workspace dashboard (injected by
+   public/js/workspace_icons.js). Icons in Frappe's bundled sprite are
+   colored via CSS custom properties (--icon-stroke for line-style icons,
+   --invert-neutral for a few solid ones like icon-close) rather than a
+   flat `fill`/`stroke` value -- confirmed in the compiled desk CSS -- and
+   custom properties inherit through an SVG <use> the same as anywhere else,
+   so overriding them here recolors the icon regardless of which mechanism
+   the specific symbol uses. */
+.widget-title .ec-card-icon {
+	margin-right: var(--margin-xs);
+	vertical-align: middle;
+	--icon-stroke: var(--ec-primary);
+	--invert-neutral: var(--ec-primary);
+	color: var(--ec-primary);
+}
+
+.widget-title .ec-card-icon.ec-card-icon-lost {
+	--icon-stroke: var(--ec-lost);
+	--invert-neutral: var(--ec-lost);
+	color: var(--ec-lost);
+}

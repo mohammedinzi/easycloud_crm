@@ -56,7 +56,10 @@ app_include_css = [
 	"/assets/easycloud_crm/css/theme.css",
 	"/assets/easycloud_crm/css/easycloud_crm.css",
 ]
-app_include_js = "/assets/easycloud_crm/js/voice_note.js"
+app_include_js = [
+	"/assets/easycloud_crm/js/voice_note.js",
+	"/assets/easycloud_crm/js/workspace_icons.js",
+]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/easycloud_crm/css/easycloud_crm.css"
