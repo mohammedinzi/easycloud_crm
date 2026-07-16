@@ -7,25 +7,33 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "deal_info_section",
   "deal_name",
   "lead",
   "customer",
   "stage",
+  "numbers_section",
   "amount",
   "probability",
   "expected_close_date",
-  "notes",
-  "deal_owner",
-  "project",
   "lost_retargeting_section",
   "lost_reason",
   "retarget_status",
-  "column_break_lost_retargeting",
+  "contact_info_section",
   "company_name",
   "contact_email",
-  "contact_phone"
+  "contact_phone",
+  "notes_section",
+  "notes",
+  "deal_owner",
+  "project"
  ],
  "fields": [
+  {
+   "fieldname": "deal_info_section",
+   "fieldtype": "Section Break",
+   "label": "Deal Info"
+  },
   {
    "fieldname": "deal_name",
    "fieldtype": "Data",
@@ -54,6 +62,11 @@
    "options": "New\nContacted\nQualified\nProposal\nNegotiation\nWon\nLost"
   },
   {
+   "fieldname": "numbers_section",
+   "fieldtype": "Section Break",
+   "label": "Numbers"
+  },
+  {
    "fieldname": "amount",
    "fieldtype": "Currency",
    "label": "Amount"
@@ -69,30 +82,12 @@
    "label": "Expected Close Date"
   },
   {
-   "fieldname": "notes",
-   "fieldtype": "Small Text",
-   "label": "Notes"
-  },
-  {
-   "fieldname": "deal_owner",
-   "fieldtype": "Link",
-   "label": "Deal Owner",
-   "options": "User"
-  },
-  {
-   "fieldname": "project",
-   "fieldtype": "Link",
-   "label": "Project",
-   "options": "Project",
-   "read_only": 1
-  },
-  {
+   "depends_on": "eval:doc.stage==\"Lost\"",
    "fieldname": "lost_retargeting_section",
    "fieldtype": "Section Break",
-   "label": "Lost / Retargeting"
+   "label": "Lost? Tell Us Why"
   },
   {
-   "depends_on": "eval:doc.stage==\"Lost\"",
    "fieldname": "lost_reason",
    "fieldtype": "Select",
    "label": "Lost Reason",
@@ -105,8 +100,9 @@
    "options": "\nEligible\nNot Eligible"
   },
   {
-   "fieldname": "column_break_lost_retargeting",
-   "fieldtype": "Column Break"
+   "fieldname": "contact_info_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Info (from Lead)"
   },
   {
    "fetch_from": "lead.company_name",
@@ -127,6 +123,29 @@
    "fieldname": "contact_phone",
    "fieldtype": "Data",
    "label": "Contact Phone",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "deal_owner",
+   "fieldtype": "Link",
+   "label": "Deal Owner",
+   "options": "User"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project",
    "read_only": 1
   }
  ],

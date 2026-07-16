@@ -7,15 +7,23 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "what_happened_section",
   "activity_type",
+  "date",
   "lead",
   "deal",
-  "date",
+  "details_section",
   "notes",
+  "voice_note_section",
   "audio_file",
   "transcript"
  ],
  "fields": [
+  {
+   "fieldname": "what_happened_section",
+   "fieldtype": "Section Break",
+   "label": "What Happened"
+  },
   {
    "fieldname": "activity_type",
    "fieldtype": "Select",
@@ -23,6 +31,11 @@
    "label": "Activity Type",
    "options": "Call\nMeeting\nEmail\nWhatsApp\nNote\nVoice Note",
    "reqd": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Datetime",
+   "label": "Date"
   },
   {
    "fieldname": "lead",
@@ -37,14 +50,20 @@
    "options": "Deal"
   },
   {
-   "fieldname": "date",
-   "fieldtype": "Datetime",
-   "label": "Date"
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
   },
   {
    "fieldname": "notes",
    "fieldtype": "Text Editor",
    "label": "Notes"
+  },
+  {
+   "depends_on": "eval:doc.activity_type==\"Voice Note\"",
+   "fieldname": "voice_note_section",
+   "fieldtype": "Section Break",
+   "label": "Voice Note"
   },
   {
    "fieldname": "audio_file",
