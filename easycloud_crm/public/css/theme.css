@@ -1,0 +1,29 @@
+/*
+ * easycloud_crm color system.
+ *
+ * These reference Frappe's own design tokens (--blue-*, --gray-*, etc. --
+ * confirmed present in apps/frappe/frappe/public/scss/common/css_variables.scss
+ * and its compiled output) rather than hardcoding new hex values. That keeps
+ * this palette from drifting out of sync with the rest of Desk, and it means
+ * dark mode is correct for free -- Frappe's own tokens already have
+ * [data-theme="dark"] overrides, ours would not if hardcoded.
+ */
+:root {
+	--ec-primary: var(--blue-600); /* actions, links, primary buttons */
+
+	/* New -> Won/Lost deliberately moves cool-to-warm (gray-blue to orange),
+	   with Won/Lost as the two clearly distinct endpoints (green/red) -- that
+	   gradient is what lets a glance at the Kanban board tell the story
+	   without reading a single label. */
+	--ec-new: var(--gray-400); /* stage: New -- neutral, just entered the pipeline */
+	--ec-contacted: var(--blue-400); /* stage: Contacted */
+	--ec-qualified: var(--blue-600); /* stage: Qualified */
+	--ec-proposal: var(--yellow-500); /* stage: Proposal -- warming up */
+	--ec-negotiation: var(--orange-500); /* stage: Negotiation -- close to a decision */
+	--ec-won: var(--green-600); /* stage: Won */
+	--ec-lost: var(--red-500); /* stage: Lost */
+
+	--ec-surface: var(--subtle-fg);
+	--ec-border: var(--border-color);
+	--ec-text-muted: var(--text-muted);
+}
