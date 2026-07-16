@@ -6,3 +6,4 @@
 # Patches added in this section will be executed after doctypes are migrated
 easycloud_crm.patches.create_deal_pipeline_kanban_board
 easycloud_crm.patches.grant_projects_manager_task_permission
+easycloud_crm.patches.set_deal_pipeline_kanban_colors
