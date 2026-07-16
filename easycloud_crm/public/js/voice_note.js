@@ -58,12 +58,8 @@ function open_voice_note_dialog(on_save) {
 		// getUserMedia is called directly inside this click handler on purpose —
 		// deferring it (setTimeout, an intervening await chain, dialog-open instead
 		// of button-click) is what makes iOS Safari silently refuse it.
-		try {
-			stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-		} catch (err) {
-			frappe.msgprint("Microphone permission was not granted.");
-			return;
-		}
+		stream = await request_microphone_access();
+		if (!stream) return; // a message was already shown above — nothing else to do here
 
 		const supported = MIME_CANDIDATES.find((t) => MediaRecorder.isTypeSupported(t));
 		mediaRecorder = supported ? new MediaRecorder(stream, { mimeType: supported }) : new MediaRecorder(stream);
@@ -122,4 +118,79 @@ function open_voice_note_dialog(on_save) {
 	}
 
 	dialog.show();
+}
+
+async function request_microphone_access() {
+	// navigator.permissions.query for 'microphone' works on Chrome/Firefox/Edge but
+	// throws on Safari (confirmed) — so this is a best-effort pre-check, never a
+	// requirement. Safari always falls through to calling getUserMedia directly below.
+	let priorState = null;
+	try {
+		if (navigator.permissions && navigator.permissions.query) {
+			const status = await navigator.permissions.query({ name: "microphone" });
+			priorState = status.state; // 'granted' | 'denied' | 'prompt'
+		}
+	} catch (e) {
+		priorState = null;
+	}
+
+	if (priorState === "denied") {
+		show_microphone_recovery_instructions();
+		return null;
+	}
+
+	try {
+		// If permission hasn't been decided yet, this line is what makes the browser's
+		// own native "Allow microphone?" pop-up appear — nothing extra is needed for that.
+		return await navigator.mediaDevices.getUserMedia({ audio: true });
+	} catch (err) {
+		if (err.name === "NotAllowedError" || err.name === "SecurityError") {
+			show_microphone_recovery_instructions();
+		} else if (err.name === "NotFoundError" || err.name === "OverconstrainedError") {
+			frappe.msgprint("No microphone was found on this device.");
+		} else if (err.name === "NotReadableError") {
+			frappe.msgprint(
+				"The microphone couldn't be accessed — it may already be in use by another app or browser tab. Close anything else using it and try again."
+			);
+		} else {
+			frappe.msgprint(`Couldn't access the microphone (${err.name || "unknown error"}).`);
+		}
+		return null;
+	}
+}
+
+function show_microphone_recovery_instructions() {
+	const ua = navigator.userAgent;
+	const isIOS = /iPad|iPhone|iPod/.test(ua);
+	const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+
+	let steps;
+	if (isIOS && isSafari) {
+		steps = `<b>On this iPhone/iPad, in Safari:</b>
+            <ol>
+                <li>Tap the <b>"Aa"</b> icon at the left of the address bar</li>
+                <li>Tap <b>Website Settings</b></li>
+                <li>Set <b>Microphone</b> to <b>Allow</b>, then reload this page</li>
+            </ol>
+            If that option isn't there: Settings app → Safari → Microphone → Ask or Allow.`;
+	} else if (isSafari) {
+		steps = `<b>In Safari, on this Mac:</b>
+            <ol>
+                <li>Safari menu → <b>Settings</b> → <b>Websites</b> tab → <b>Microphone</b></li>
+                <li>Find this site and set it to <b>Allow</b>, then reload this page</li>
+            </ol>`;
+	} else {
+		steps = `<b>In this browser:</b>
+            <ol>
+                <li>Click the lock/info icon next to the address bar</li>
+                <li>Find <b>Microphone</b> under site permissions and set it to <b>Allow</b></li>
+                <li>Reload this page</li>
+            </ol>`;
+	}
+
+	frappe.msgprint({
+		title: "Microphone access is blocked",
+		indicator: "orange",
+		message: `Microphone permission was denied for this site previously, so the browser won't ask again on its own — it has to be turned back on manually.<br><br>${steps}`,
+	});
 }
