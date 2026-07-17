@@ -12,7 +12,13 @@ app_license = "mit"
 fixtures = [
 	{
 		"doctype": "Custom Field",
-		"filters": [["name", "in", ["Task-custom_lead", "Task-custom_deal", "Lead-source_received_date"]]],
+		"filters": [
+			[
+				"name",
+				"in",
+				["Task-custom_lead", "Task-custom_deal", "Lead-source_received_date", "Lead-source_detail"],
+			]
+		],
 	},
 	{
 		"doctype": "Lead Source",

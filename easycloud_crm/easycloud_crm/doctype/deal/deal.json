@@ -10,11 +10,11 @@
   "deal_info_section",
   "deal_name",
   "lead",
-  "customer",
   "stage",
   "last_contacted_on",
   "numbers_section",
   "amount",
+  "expected_recurring_income",
   "probability",
   "expected_close_date",
   "lost_retargeting_section",
@@ -24,9 +24,15 @@
   "company_name",
   "contact_email",
   "contact_phone",
+  "location",
+  "requirement_section",
+  "requirement",
+  "actions_taken_so_far",
+  "next_steps",
   "notes_section",
   "notes",
   "deal_owner",
+  "customer",
   "project"
  ],
  "fields": [
@@ -47,12 +53,6 @@
    "fieldtype": "Link",
    "label": "Lead",
    "options": "Lead"
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer"
   },
   {
    "default": "New",
@@ -79,6 +79,11 @@
    "label": "Amount"
   },
   {
+   "fieldname": "expected_recurring_income",
+   "fieldtype": "Currency",
+   "label": "Expected Recurring Income"
+  },
+  {
    "fieldname": "probability",
    "fieldtype": "Percent",
    "label": "Probability"
@@ -98,7 +103,7 @@
    "fieldname": "lost_reason",
    "fieldtype": "Select",
    "label": "Lost Reason",
-   "options": "\nPrice\nCompetitor\nBudget\nNo Response\nToo Big for Us\nToo Small for Us"
+   "options": "\nPrice\nCompetitor\nBudget\nNo Response\nToo Big for Us\nToo Small for Us\nNot a Fit\nCold"
   },
   {
    "fieldname": "retarget_status",
@@ -133,6 +138,31 @@
    "read_only": 1
   },
   {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "requirement_section",
+   "fieldtype": "Section Break",
+   "label": "Requirement & Progress"
+  },
+  {
+   "fieldname": "requirement",
+   "fieldtype": "Small Text",
+   "label": "Requirement"
+  },
+  {
+   "fieldname": "actions_taken_so_far",
+   "fieldtype": "Small Text",
+   "label": "Actions Taken So Far"
+  },
+  {
+   "fieldname": "next_steps",
+   "fieldtype": "Small Text",
+   "label": "Next Steps"
+  },
+  {
    "fieldname": "notes_section",
    "fieldtype": "Section Break",
    "label": "Notes"
@@ -147,6 +177,13 @@
    "fieldtype": "Link",
    "label": "Deal Owner",
    "options": "User"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
   },
   {
    "fieldname": "project",

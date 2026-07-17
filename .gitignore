@@ -5,3 +5,7 @@
 tags
 node_modules
 __pycache__
+
+# Real customer data / one-off migration scripts — never belongs in git history
+migration_data/
+easycloud_crm/migration_data/
