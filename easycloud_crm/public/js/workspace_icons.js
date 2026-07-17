@@ -14,11 +14,14 @@
 (function () {
 	const CARD_ICONS = {
 		"Total Leads": "icon-users",
+		"Open Leads": "icon-users",
+		"Total Deals": "icon-list",
 		"Open Deals": "icon-sell",
 		"Won Deals": "icon-check",
 		Revenue: "icon-money-coins-1",
-		Projects: "icon-projects",
 		"Lost Deals": "icon-close",
+		"CRM Activities": "icon-activity",
+		Tasks: "icon-tasks",
 	};
 
 	function icon_svg(icon_name, extra_class) {

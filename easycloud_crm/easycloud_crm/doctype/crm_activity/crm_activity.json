@@ -35,11 +35,13 @@
   {
    "fieldname": "date",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "Date"
   },
   {
    "fieldname": "lead",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Lead",
    "options": "Lead"
   },

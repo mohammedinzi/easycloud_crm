@@ -10,5 +10,9 @@ frappe.ui.form.on("CRM Activity", {
 				frm.set_value("transcript", result.transcript);
 			});
 		});
+
+		if (frm.doc.lead) {
+			frm.add_custom_button("Open Lead", () => frappe.set_route("Form", "Lead", frm.doc.lead));
+		}
 	},
 });

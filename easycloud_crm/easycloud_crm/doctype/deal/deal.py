@@ -12,39 +12,24 @@ class Deal(Document):
 
 	def on_update(self):
 		if self.stage == "Won" and self.has_value_changed("stage"):
-			self.convert_to_customer_and_project()
+			self.convert_to_customer()
 
-	def convert_to_customer_and_project(self):
+	def convert_to_customer(self):
 		company_name = (
 			frappe.db.get_value("Lead", self.lead, "company_name") if self.lead else None
 		) or self.deal_name
 
-		if not self.customer:
-			customer = frappe.new_doc("Customer")
-			customer.customer_name = company_name
-			customer.insert(ignore_permissions=True)
-			self.db_set("customer", customer.name)
-		else:
-			customer = frappe.get_doc("Customer", self.customer)
+		if self.customer:
+			return
 
-		if not self.project:
-			project = frappe.new_doc("Project")
-			project.project_name = company_name
-			project.customer = customer.name
-			project.insert(ignore_permissions=True)
-			self.db_set("project", project.name)
+		existing_customer = frappe.db.get_value("Customer", {"customer_name": company_name})
+		if existing_customer:
+			self.db_set("customer", existing_customer)
+			frappe.msgprint(f"Customer already exists for {company_name}")
+			return
 
-			for subject in [
-				"Requirement Gathering",
-				"Implementation",
-				"Testing",
-				"Go Live",
-				"Training",
-			]:
-				task = frappe.new_doc("Task")
-				task.subject = subject
-				task.project = project.name
-				task.custom_deal = self.name
-				task.insert(ignore_permissions=True)
-
-			frappe.msgprint(f"Customer and Project created for {company_name}")
+		customer = frappe.new_doc("Customer")
+		customer.customer_name = company_name
+		customer.insert(ignore_permissions=True)
+		self.db_set("customer", customer.name)
+		frappe.msgprint(f"Customer created for {company_name}")
