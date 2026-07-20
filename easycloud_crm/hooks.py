@@ -55,6 +55,16 @@ fixtures = [
 		"filters": [["name", "=", "Marketing User"]],
 	},
 	{
+		"doctype": "Notification",
+		"filters": [
+			[
+				"name",
+				"in",
+				["Assignment Email Notification", "New Lead Email to Shruti"],
+			]
+		],
+	},
+	{
 		"doctype": "Property Setter",
 		"filters": [
 			[
@@ -150,10 +160,9 @@ doctype_list_js = {"CRM Activity": "public/js/crm_activity_list.js"}
 # ----------
 
 # add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "easycloud_crm.utils.jinja_methods",
-# 	"filters": "easycloud_crm.utils.jinja_filters"
-# }
+jinja = {
+	"methods": "easycloud_crm.utils",
+}
 
 # Installation
 # ------------
