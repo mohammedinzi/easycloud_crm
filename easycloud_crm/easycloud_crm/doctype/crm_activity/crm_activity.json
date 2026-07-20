@@ -8,10 +8,13 @@
  "engine": "InnoDB",
  "field_order": [
   "what_happened_section",
+  "activity_title",
   "activity_type",
   "date",
   "lead",
   "deal",
+  "customer",
+  "contact",
   "details_section",
   "notes",
   "voice_note_section",
@@ -23,6 +26,14 @@
    "fieldname": "what_happened_section",
    "fieldtype": "Section Break",
    "label": "What Happened"
+  },
+  {
+   "fieldname": "activity_title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Reference",
+   "read_only": 1
   },
   {
    "fieldname": "activity_type",
@@ -41,7 +52,6 @@
   {
    "fieldname": "lead",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Lead",
    "options": "Lead"
   },
@@ -50,6 +60,18 @@
    "fieldtype": "Link",
    "label": "Deal",
    "options": "Deal"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Contact",
+   "options": "Contact"
   },
   {
    "fieldname": "details_section",
@@ -131,5 +153,6 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "activity_title"
 }

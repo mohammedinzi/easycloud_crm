@@ -66,6 +66,7 @@ fixtures = [
 					"Lead-status-hidden",
 					"Lead-source-in_list_view",
 					"Lead-no_of_employees-options",
+					"Lead-notes_tab-hidden",
 				],
 			]
 		],

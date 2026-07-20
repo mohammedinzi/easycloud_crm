@@ -78,5 +78,21 @@
   "property_type": "Text",
   "row_name": null,
   "value": "1-10\n11-25\n11-50\n26-50\n51-100\n51-200\n101-200\n201-500\n501-1000\n1000+"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Lead",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "notes_tab",
+  "is_system_generated": 1,
+  "modified": "2026-07-20 14:15:13.227934",
+  "module": null,
+  "name": "Lead-notes_tab-hidden",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
  }
 ]

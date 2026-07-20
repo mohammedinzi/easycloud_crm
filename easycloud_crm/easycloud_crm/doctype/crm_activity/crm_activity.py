@@ -8,8 +8,24 @@ from frappe.model.document import Document
 
 class CRMActivity(Document):
 	def validate(self):
-		if not self.lead and not self.deal:
-			frappe.throw("CRM Activity must be linked to a Lead or a Deal")
+		if not (self.lead or self.deal or self.customer or self.contact):
+			frappe.throw("CRM Activity must be linked to a Lead, Deal, Customer, or Contact")
+
+		self.activity_title = self.get_activity_title()
+
+	def get_activity_title(self):
+		if self.lead:
+			title = frappe.get_cached_value("Lead", self.lead, "title") or self.lead
+			return f"Lead: {title}"
+		if self.deal:
+			title = frappe.get_cached_value("Deal", self.deal, "deal_name") or self.deal
+			return f"Deal: {title}"
+		if self.customer:
+			return f"Customer: {self.customer}"
+		if self.contact:
+			title = frappe.get_cached_value("Contact", self.contact, "full_name") or self.contact
+			return f"Contact: {title}"
+		return self.activity_type
 
 	def on_update(self):
 		if (
