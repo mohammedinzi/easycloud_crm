@@ -7,6 +7,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "custom_stage_progress_html",
   "deal_info_section",
   "deal_name",
   "lead",
@@ -22,6 +23,7 @@
   "retarget_status",
   "contact_info_section",
   "company_name",
+  "contact_name",
   "contact_email",
   "contact_phone",
   "location",
@@ -29,13 +31,25 @@
   "requirement",
   "actions_taken_so_far",
   "next_steps",
-  "notes_section",
-  "notes",
+  "ownership_section",
   "deal_owner",
   "customer",
-  "project"
+  "project",
+  "timeline_tab",
+  "custom_deal_timeline_html",
+  "notes_tab",
+  "notes",
+  "activities_tab",
+  "custom_deal_activities_html",
+  "products_tab",
+  "products"
  ],
  "fields": [
+  {
+   "fieldname": "custom_stage_progress_html",
+   "fieldtype": "HTML",
+   "label": "Stage Progress"
+  },
   {
    "fieldname": "deal_info_section",
    "fieldtype": "Section Break",
@@ -55,16 +69,18 @@
    "options": "Lead"
   },
   {
-   "default": "New",
+   "default": "Qualified",
    "fieldname": "stage",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Stage",
-   "options": "New\nContacted\nQualified\nProposal\nNegotiation\nWon\nLost"
+   "options": "Qualified\nProposal Sent\nDemo Given\nNegotiation\nWon\nCold\nLost\nNot worth our time\nToo Large"
   },
   {
    "fieldname": "last_contacted_on",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "Last Contacted",
    "read_only": 1
   },
@@ -124,6 +140,14 @@
    "read_only": 1
   },
   {
+   "fetch_from": "lead.lead_name",
+   "fieldname": "contact_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contact Name",
+   "read_only": 1
+  },
+  {
    "fetch_from": "lead.email_id",
    "fieldname": "contact_email",
    "fieldtype": "Data",
@@ -163,14 +187,9 @@
    "label": "Next Steps"
   },
   {
-   "fieldname": "notes_section",
+   "fieldname": "ownership_section",
    "fieldtype": "Section Break",
-   "label": "Notes"
-  },
-  {
-   "fieldname": "notes",
-   "fieldtype": "Small Text",
-   "label": "Notes"
+   "label": "Ownership & Conversion"
   },
   {
    "fieldname": "deal_owner",
@@ -191,6 +210,47 @@
    "label": "Project",
    "options": "Project",
    "read_only": 1
+  },
+  {
+   "fieldname": "timeline_tab",
+   "fieldtype": "Tab Break",
+   "label": "Timeline"
+  },
+  {
+   "fieldname": "custom_deal_timeline_html",
+   "fieldtype": "HTML",
+   "label": "Stage Timeline"
+  },
+  {
+   "fieldname": "notes_tab",
+   "fieldtype": "Tab Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "activities_tab",
+   "fieldtype": "Tab Break",
+   "label": "Activities"
+  },
+  {
+   "fieldname": "custom_deal_activities_html",
+   "fieldtype": "HTML",
+   "label": "CRM Activities"
+  },
+  {
+   "fieldname": "products_tab",
+   "fieldtype": "Tab Break",
+   "label": "Products"
+  },
+  {
+   "fieldname": "products",
+   "fieldtype": "Table MultiSelect",
+   "label": "Products",
+   "options": "Deal Product"
   }
  ],
  "grid_page_length": 50,

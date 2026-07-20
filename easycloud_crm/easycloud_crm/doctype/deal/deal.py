@@ -11,6 +11,16 @@ class Deal(Document):
 			frappe.throw("Select a Lost Reason before marking this Deal as Lost.")
 
 	def on_update(self):
+		if self.has_value_changed("stage"):
+			frappe.get_doc(
+				{
+					"doctype": "Deal Stage Log",
+					"deal": self.name,
+					"stage": self.stage,
+					"changed_by": frappe.session.user,
+				}
+			).insert(ignore_permissions=True)
+
 		if self.stage == "Won" and self.has_value_changed("stage"):
 			self.convert_to_customer()
 

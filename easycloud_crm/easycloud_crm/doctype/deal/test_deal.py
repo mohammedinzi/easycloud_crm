@@ -24,7 +24,7 @@ class TestDeal(FrappeTestCase):
 				"doctype": "Deal",
 				"deal_name": "ZZTEST Won Automation Deal",
 				"lead": lead.name,
-				"stage": "New",
+				"stage": "Qualified",
 			}
 		)
 		deal.insert(ignore_permissions=True)
@@ -54,7 +54,7 @@ class TestDeal(FrappeTestCase):
 				"doctype": "Deal",
 				"deal_name": "ZZTEST Reuse Customer Deal",
 				"lead": lead.name,
-				"stage": "New",
+				"stage": "Qualified",
 			}
 		)
 		deal.insert(ignore_permissions=True)
@@ -65,3 +65,43 @@ class TestDeal(FrappeTestCase):
 
 		self.assertEqual(deal.customer, existing_customer.name)
 		self.assertEqual(frappe.db.count("Customer", {"customer_name": company_name}), 1)
+
+	def test_stage_change_creates_stage_log(self):
+		lead = self.make_lead("ZZTEST Stage Log Co")
+		deal = frappe.get_doc(
+			{
+				"doctype": "Deal",
+				"deal_name": "ZZTEST Stage Log Deal",
+				"lead": lead.name,
+				"stage": "Qualified",
+			}
+		)
+		deal.insert(ignore_permissions=True)
+
+		deal.stage = "Proposal Sent"
+		deal.save(ignore_permissions=True)
+
+		deal.stage = "Demo Given"
+		deal.save(ignore_permissions=True)
+
+		logs = frappe.get_all(
+			"Deal Stage Log", filters={"deal": deal.name}, fields=["stage"], order_by="changed_on asc"
+		)
+		self.assertEqual([l.stage for l in logs], ["Qualified", "Proposal Sent", "Demo Given"])
+
+	def test_resaving_without_stage_change_does_not_duplicate_log(self):
+		lead = self.make_lead("ZZTEST Stage Log Resave Co")
+		deal = frappe.get_doc(
+			{
+				"doctype": "Deal",
+				"deal_name": "ZZTEST Stage Log Resave Deal",
+				"lead": lead.name,
+				"stage": "Qualified",
+			}
+		)
+		deal.insert(ignore_permissions=True)
+
+		deal.notes = "just touching the doc"
+		deal.save(ignore_permissions=True)
+
+		self.assertEqual(frappe.db.count("Deal Stage Log", {"deal": deal.name}), 1)
