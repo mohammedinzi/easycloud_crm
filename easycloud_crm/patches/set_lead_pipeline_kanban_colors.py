@@ -1,3 +1,12 @@
+# ==============================================================================
+# patches/set_lead_pipeline_kanban_colors.py -- one-time patch (see
+# patches.txt) that colour-codes the Lead Pipeline Kanban board's columns
+# (created by create_lead_pipeline_kanban_board.py, which must run first).
+# Unlike the Deal version of this patch, Lead's stage list HASN'T changed
+# since this was written, so STAGE_INDICATORS below still matches
+# lead.py's actual New/Contacted/Qualified/Do Not Contact pipeline exactly.
+# ==============================================================================
+
 import frappe
 
 STAGE_INDICATORS = {
