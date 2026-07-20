@@ -16,7 +16,18 @@ fixtures = [
 			[
 				"name",
 				"in",
-				["Task-custom_lead", "Task-custom_deal", "Lead-source_received_date", "Lead-source_detail"],
+				[
+					"Task-custom_lead",
+					"Task-custom_deal",
+					"Lead-source_received_date",
+					"Lead-source_detail",
+					"Lead-stage",
+					"Lead-do_not_contact_reason",
+					"Lead-meta_leadgen_id",
+					"Lead-current_erp",
+					"Lead-custom_crm_activities_html",
+					"Lead-stage_changed_on",
+				],
 			]
 		],
 	},
@@ -26,7 +37,16 @@ fixtures = [
 			[
 				"name",
 				"in",
-				["Website", "Instagram", "Referral", "LinkedIn", "WhatsApp", "Email", "Partners for Sales"],
+				[
+					"Website",
+					"Instagram",
+					"Referral",
+					"LinkedIn",
+					"WhatsApp",
+					"Email",
+					"Partners for Sales",
+					"Meta Ads",
+				],
 			]
 		],
 	},
@@ -36,7 +56,19 @@ fixtures = [
 	},
 	{
 		"doctype": "Property Setter",
-		"filters": [["name", "in", ["User-default_workspace-default", "Lead-main-show_title_field_in_link"]]],
+		"filters": [
+			[
+				"name",
+				"in",
+				[
+					"User-default_workspace-default",
+					"Lead-main-show_title_field_in_link",
+					"Lead-status-hidden",
+					"Lead-source-in_list_view",
+					"Lead-no_of_employees-options",
+				],
+			]
+		],
 	},
 ]
 
@@ -67,6 +99,7 @@ app_include_css = [
 app_include_js = [
 	"/assets/easycloud_crm/js/voice_note.js",
 	"/assets/easycloud_crm/js/workspace_icons.js",
+	"/assets/easycloud_crm/js/crm_activities_panel.js",
 ]
 
 # include js, css files in header of web template
@@ -84,7 +117,8 @@ app_include_js = [
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Task": "public/js/task.js"}
+# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {"Lead": "public/js/lead.js"}
 doctype_list_js = {"CRM Activity": "public/js/crm_activity_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -178,13 +212,12 @@ doctype_list_js = {"CRM Activity": "public/js/crm_activity_list.js"}
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Lead": {
+		"validate": "easycloud_crm.lead.validate",
+		"on_update": "easycloud_crm.lead.on_update",
+	}
+}
 
 # Scheduled Tasks
 # ---------------

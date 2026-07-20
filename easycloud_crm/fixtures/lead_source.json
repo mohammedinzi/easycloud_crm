@@ -54,5 +54,13 @@
   "modified": "2026-07-14 11:37:01.637782",
   "name": "Email",
   "source_name": "Email"
+ },
+ {
+  "details": null,
+  "docstatus": 0,
+  "doctype": "Lead Source",
+  "modified": "2026-07-17 20:03:41.094094",
+  "name": "Meta Ads",
+  "source_name": "Meta Ads"
  }
 ]

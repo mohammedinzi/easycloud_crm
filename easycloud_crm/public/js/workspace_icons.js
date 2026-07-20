@@ -21,7 +21,6 @@
 		Revenue: "icon-money-coins-1",
 		"Lost Deals": "icon-close",
 		"CRM Activities": "icon-activity",
-		Tasks: "icon-tasks",
 	};
 
 	function icon_svg(icon_name, extra_class) {
