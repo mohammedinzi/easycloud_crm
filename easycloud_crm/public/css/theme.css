@@ -11,17 +11,31 @@
 :root {
 	--ec-primary: var(--blue-600); /* actions, links, primary buttons */
 
-	/* New -> Won/Lost deliberately moves cool-to-warm (gray-blue to orange),
-	   with Won/Lost as the two clearly distinct endpoints (green/red) -- that
-	   gradient is what lets a glance at the Kanban board tell the story
-	   without reading a single label. */
-	--ec-new: var(--gray-400); /* stage: New -- neutral, just entered the pipeline */
-	--ec-contacted: var(--blue-400); /* stage: Contacted */
-	--ec-qualified: var(--blue-600); /* stage: Qualified */
-	--ec-proposal: var(--yellow-500); /* stage: Proposal -- warming up */
-	--ec-negotiation: var(--orange-500); /* stage: Negotiation -- close to a decision */
-	--ec-won: var(--green-600); /* stage: Won */
-	--ec-lost: var(--red-500); /* stage: Lost */
+	/* Lead's own pipeline (New -> Contacted -> Qualified -> Do Not Contact,
+	   see lead.py). Cool-to-warm as it warms up, red as the one dead end. */
+	--ec-lead-new: var(--gray-400);
+	--ec-lead-contacted: var(--blue-400);
+	--ec-lead-qualified: var(--blue-600);
+	--ec-lead-do-not-contact: var(--red-500);
+
+	/* Deal's pipeline (see doctype/deal/deal.json's `stage` options).
+	   Linear stages move cool-to-warm as a Deal gets closer to Won (the
+	   green endpoint); the four exit stages are all variations on
+	   "stopped here, didn't reach Won", kept visually distinct from each
+	   other rather than one single generic "not-won" grey/red, since
+	   *why* a Deal stopped (Cold vs. genuinely Lost vs. Too Large for us)
+	   is meaningfully different information at a glance.
+	   NOTE: kept in sync with patches/recolor_deal_pipeline_kanban_stages.py
+	   and public/js/pipeline_list_colors.js -- all three should agree. */
+	--ec-deal-qualified: var(--blue-600);
+	--ec-deal-proposal-sent: var(--purple-500);
+	--ec-deal-demo-given: var(--yellow-600);
+	--ec-deal-negotiation: var(--orange-500);
+	--ec-deal-won: var(--green-600);
+	--ec-deal-cold: var(--blue-300); /* went quiet -- not a rejection, just faded */
+	--ec-deal-lost: var(--red-500); /* an explicit no */
+	--ec-deal-not-worth-our-time: var(--gray-600); /* our own call, not theirs */
+	--ec-deal-too-large: var(--gray-500); /* neutral -- a fit/size mismatch, not a rejection */
 
 	--ec-surface: var(--subtle-fg);
 	--ec-border: var(--border-color);

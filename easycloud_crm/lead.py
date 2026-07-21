@@ -33,6 +33,42 @@ def validate(doc, method=None):
 	if doc.stage == "Do Not Contact" and not doc.do_not_contact_reason:
 		frappe.throw("Select a reason before marking this Lead as Do Not Contact.")
 
+	if doc.is_new():
+		warn_if_duplicate_contact(doc)
+
+
+def warn_if_duplicate_contact(doc):
+	"""Flags (but never blocks) a brand-new Lead that shares a phone number
+	with an existing Lead. Deliberately a warning, not a frappe.throw --
+	unlike "Do Not Contact needs a reason" above, this isn't a rule the
+	computer can safely enforce: a rep might genuinely be creating a
+	second, real opportunity for a past contact (e.g. a former customer
+	coming back with a brand new inquiry). The goal is just making sure
+	they SEE it before deciding, same reasoning already used for Deal's
+	retarget_status field -- some judgment calls are for a human, not a
+	validation rule.
+
+	Phone only, deliberately NOT email: erpnext's own stock Lead controller
+	(erpnext/crm/doctype/lead/lead.py) already has a check_email_id_is_unique()
+	that hard-blocks a duplicate email outright (a frappe.throw, gated by a
+	"CRM Settings" toggle) -- confirmed by hitting it directly while testing
+	this. Duplicating that here would be redundant at best, and dead code
+	at worst, since that native check runs first and would already have
+	stopped the save before this ever got a chance to run. Phone numbers
+	have no equivalent native check, which is the actual gap this closes.
+	"""
+	match = None
+	if doc.mobile_no:
+		match = frappe.db.get_value("Lead", {"mobile_no": doc.mobile_no, "name": ["!=", doc.name]}, "name")
+
+	if match:
+		match_link = frappe.utils.get_link_to_form("Lead", match)
+		frappe.msgprint(
+			f"Possible duplicate: {match_link} already has this phone number.",
+			title="Possible Duplicate Lead",
+			indicator="orange",
+		)
+
 
 def on_update(doc, method=None):
 	"""Runs right after a Lead is successfully saved.

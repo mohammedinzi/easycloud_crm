@@ -33,3 +33,4 @@ easycloud_crm.patches.set_deal_pipeline_kanban_colors
 easycloud_crm.patches.show_last_contacted_on_kanban_cards
 easycloud_crm.patches.create_lead_pipeline_kanban_board
 easycloud_crm.patches.set_lead_pipeline_kanban_colors
+easycloud_crm.patches.recolor_deal_pipeline_kanban_stages

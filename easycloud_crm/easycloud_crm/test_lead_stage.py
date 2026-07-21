@@ -108,3 +108,52 @@ class TestLeadStage(FrappeTestCase):
 		lead.save(ignore_permissions=True)
 		lead.reload()
 		self.assertEqual(lead.stage, "Do Not Contact")
+
+	def test_duplicate_phone_warns_but_does_not_block_save(self):
+		"""Confirms warn_if_duplicate_contact(): a second Lead sharing an
+		existing Lead's phone number should still save successfully (this
+		is a warning, not a frappe.throw), but should add a message to
+		frappe.message_log naming the existing Lead -- so a rep sees it
+		without being stopped from proceeding if they genuinely mean to
+		create a second, real Lead for that contact. Phone, not email --
+		see warn_if_duplicate_contact's own docstring for why email isn't
+		handled here (erpnext's stock Lead already hard-blocks that case
+		natively).
+		"""
+		existing = self.make_lead("ZZTEST Duplicate Original Co")
+		existing.mobile_no = "9876500000"
+		existing.save(ignore_permissions=True)
+
+		frappe.message_log = []
+		new_lead = frappe.get_doc(
+			{
+				"doctype": "Lead",
+				"lead_name": "ZZTEST Duplicate Second Co",
+				"company_name": "ZZTEST Duplicate Second Co",
+				"mobile_no": "9876500000",
+			}
+		)
+		new_lead.insert(ignore_permissions=True)
+
+		self.assertTrue(new_lead.name)  # save succeeded -- not blocked
+		self.assertEqual(len(frappe.message_log), 1)
+		self.assertIn(existing.name, frappe.message_log[0]["message"])
+
+	def test_unique_phone_does_not_warn(self):
+		"""The other side of the same check: a genuinely new phone number,
+		set at creation time (this check only runs for brand new Leads --
+		see is_new() in lead.py's validate), should not trigger any
+		warning at all.
+		"""
+		frappe.message_log = []
+		lead = frappe.get_doc(
+			{
+				"doctype": "Lead",
+				"lead_name": "ZZTEST No Duplicate Co",
+				"company_name": "ZZTEST No Duplicate Co",
+				"mobile_no": "9876511111",
+			}
+		)
+		lead.insert(ignore_permissions=True)
+
+		self.assertEqual(len(frappe.message_log), 0)

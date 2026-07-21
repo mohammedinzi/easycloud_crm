@@ -96,6 +96,14 @@ fixtures = [
 		],
 	},
 	{
+		# Assignment Rule: Frappe's native auto-assignment feature (Round
+		# Robin/Load Balancing/etc.) -- routes every new Lead to a Sales
+		# User automatically, creating a real ToDo, which in turn triggers
+		# the "Assignment Email Notification" above for free.
+		"doctype": "Assignment Rule",
+		"filters": [["name", "=", "Lead Auto Assignment"]],
+	},
+	{
 		# Role: a custom permission role (e.g. for marketing team members who
 		# should see leads/reports but not edit deals). See each doctype's
 		# .json "permissions" section for what this role can actually do.
@@ -115,6 +123,7 @@ fixtures = [
 				[
 					"Assignment Email Notification",  # emails whoever a Lead/Deal/CRM Activity/etc. gets assigned to (fires on ToDo "New")
 					"New Lead Email to Shruti",  # emails shruti@easycloud.in every time a new Lead is created, any source
+					"Stale Deal Follow-up Reminder",  # emails a Deal's owner if last_contacted_on is 3+ days old and the Deal is still active
 				],
 			]
 		],
@@ -211,8 +220,15 @@ doctype_js = {"Lead": "public/js/lead.js"}
 
 # doctype_list_js loads on a doctype's LIST view (the table of records), not
 # its form. Used here purely for cosmetics -- see crm_activity_list.js, which
-# adds an icon (📞 🤝 📧 ...) next to each row based on its Activity Type.
-doctype_list_js = {"CRM Activity": "public/js/crm_activity_list.js"}
+# adds an icon (📞 🤝 📧 ...) next to each row based on its Activity Type;
+# pipeline_list_colors.js does the same idea for Lead/Deal's `stage` column,
+# turning the plain text into a colored pill (see theme.css's
+# --ec-lead-*/--ec-deal-* tokens for the actual colors used).
+doctype_list_js = {
+	"CRM Activity": "public/js/crm_activity_list.js",
+	"Lead": "public/js/pipeline_list_colors.js",
+	"Deal": "public/js/pipeline_list_colors.js",
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 

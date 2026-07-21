@@ -114,6 +114,28 @@ class Deal(Document):
 		# necessarily Customer-creation rights specifically.
 		customer = frappe.new_doc("Customer")
 		customer.customer_name = company_name
+		customer.customer_group = get_default_customer_group()
 		customer.insert(ignore_permissions=True)
 		self.db_set("customer", customer.name)
 		frappe.msgprint(f"Customer created for {company_name}")
+
+
+def get_default_customer_group():
+	"""Picks a real, assignable (non-Group) Customer Group for newly created
+	Customers, instead of leaving `customer_group` unset and relying on
+	Selling Settings' own default. Found the hard way: Selling Settings'
+	default can legitimately point at a Group-type node (the root of the
+	Customer Group tree, e.g. "All Customer Groups") -- valid for
+	organising the tree, but Customer's own controller correctly REJECTS
+	assigning a Group-type node directly to a real Customer. Rather than
+	depend on a global setting we don't control staying correctly
+	configured, this looks up a real leaf group ourselves.
+	"""
+	configured = frappe.db.get_single_value("Selling Settings", "customer_group")
+	if configured and not frappe.db.get_value("Customer Group", configured, "is_group"):
+		return configured  # Selling Settings' default is a real leaf group -- use it as-is
+
+	# Fall back to whichever real (non-Group) Customer Group happens to
+	# exist -- covers a misconfigured or group-type default without
+	# hard-coding one specific group name that might not exist on every site.
+	return frappe.db.get_value("Customer Group", {"is_group": 0}, "name")

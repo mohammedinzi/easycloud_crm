@@ -97,6 +97,18 @@ def process_meta_lead(leadgen_id, form_id=None, ad_id=None, created_time=None):
 	field_data = response.json().get("field_data", [])
 
 	lead_values = map_field_data_to_lead(field_data)
+
+	# Second de-duplication guard, layered on top of the leadgen_id one
+	# above: the SAME PERSON can submit a Meta form more than once (a
+	# different ad, a different form, genuinely re-filling it out) --
+	# each of those gets its own unique leadgen_id, so the check above
+	# wouldn't catch it. Unlike lead.py's warn_if_duplicate_contact (which
+	# shows a human a warning they can act on), there's no one watching
+	# this background job -- a warning would never be seen -- so the only
+	# sane behaviour here is to simply not create a second Lead at all.
+	if _find_existing_lead_by_contact(lead_values):
+		return
+
 	lead_values["meta_leadgen_id"] = leadgen_id  # store the ID so the de-dupe check above works for any future replay
 	lead_values["source"] = "Meta Ads"  # sets the Lead Source dropdown, see hooks.py's fixtures for this option
 	lead_values["source_detail"] = _build_source_detail(form_id, ad_id)
@@ -114,6 +126,22 @@ def process_meta_lead(leadgen_id, form_id=None, ad_id=None, created_time=None):
 	lead = frappe.get_doc({"doctype": "Lead", **lead_values})
 	lead.insert(ignore_permissions=True)
 	return lead.name
+
+
+def _find_existing_lead_by_contact(lead_values):
+	"""Looks for an existing Lead sharing this submission's email or phone.
+	Checked separately from (and after) the meta_leadgen_id check in
+	process_meta_lead, since this catches a different scenario: the same
+	person submitting again under a brand new leadgen_id, not a replay of
+	the same webhook notification.
+	"""
+	email = lead_values.get("email_id")
+	if email and frappe.db.exists("Lead", {"email_id": email}):
+		return True
+	mobile = lead_values.get("mobile_no")
+	if mobile and frappe.db.exists("Lead", {"mobile_no": mobile}):
+		return True
+	return False
 
 
 def map_field_data_to_lead(field_data):

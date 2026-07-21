@@ -14,6 +14,8 @@
 import frappe
 from frappe.tests.utils import FrappeTestCase
 
+from easycloud_crm.easycloud_crm.doctype.deal.deal import get_default_customer_group
+
 
 class TestCRMActivity(FrappeTestCase):
 	def test_requires_lead_or_deal(self):
@@ -40,6 +42,10 @@ class TestCRMActivity(FrappeTestCase):
 				"doctype": "Customer",
 				"customer_name": "ZZTEST Activity Customer",
 				"customer_type": "Company",
+				# see test_deal.py's test_won_reuses_existing_customer for why
+				# this is needed -- erpnext's own test setup resets Selling
+				# Settings' default customer_group to a Group-type node.
+				"customer_group": get_default_customer_group(),
 			}
 		)
 		customer.insert(ignore_permissions=True)

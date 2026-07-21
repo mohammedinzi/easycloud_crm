@@ -251,3 +251,40 @@ class TestProcessMetaLead(FrappeTestCase):
 
 		self.assertIsNone(result)  # the de-dupe guard returns early with no value
 		self.assertEqual(frappe.db.count("Lead", {"meta_leadgen_id": "ZZTEST-leadgen-1"}), 1)
+
+	@patch("easycloud_crm.meta_leads.requests.get")
+	def test_dedupes_same_person_with_a_different_leadgen_id(self, mock_get):
+		"""The leadgen_id-based guard above only catches an exact replay of
+		the SAME webhook notification. This covers the other case
+		_find_existing_lead_by_contact exists for: the same person
+		submitting the form again (a different ad, or just re-filling it
+		out), which Meta gives a brand new leadgen_id -- confirms that
+		still doesn't create a second Lead, since the email already
+		matches an existing one.
+
+		Uses its own field_data (not the shared SAMPLE_FIELD_DATA) with a
+		email unique to this test -- FrappeTestCase shares one transaction
+		across every test method in a class, so reusing SAMPLE_FIELD_DATA's
+		email here would collide with the Lead test_creates_lead_and_dedupes_on_replay
+		already created earlier in this same class, rather than testing
+		what this test is actually meant to check.
+		"""
+		field_data = [
+			{"name": "full_name", "values": ["ZZTEST John Repeat"]},
+			{"name": "company_name", "values": ["ZZTEST Repeat Submission Co"]},
+			{"name": "email", "values": ["zztest.repeat.submission@example.com"]},
+		]
+		mock_response = MagicMock()
+		mock_response.json.return_value = {"field_data": field_data}
+		mock_response.raise_for_status.return_value = None
+		mock_get.return_value = mock_response
+
+		first = process_meta_lead(leadgen_id="ZZTEST-leadgen-first")
+		self.assertTrue(first)
+
+		# same field_data (same email) but a completely different
+		# leadgen_id -- the first guard alone wouldn't catch this
+		second = process_meta_lead(leadgen_id="ZZTEST-leadgen-second")
+
+		self.assertIsNone(second)
+		self.assertEqual(frappe.db.count("Lead", {"email_id": "zztest.repeat.submission@example.com"}), 1)

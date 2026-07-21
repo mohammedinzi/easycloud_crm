@@ -24,6 +24,8 @@
 import frappe
 from frappe.tests.utils import FrappeTestCase
 
+from easycloud_crm.easycloud_crm.doctype.deal.deal import get_default_customer_group
+
 
 class TestDeal(FrappeTestCase):
 	def make_lead(self, company_name):
@@ -83,6 +85,14 @@ class TestDeal(FrappeTestCase):
 				"doctype": "Customer",
 				"customer_name": company_name,
 				"customer_type": "Company",
+				# Same helper convert_to_customer() itself uses -- without this,
+				# Customer creation depends on Selling Settings' own default
+				# customer_group, which erpnext's own test setup
+				# (erpnext.setup.utils.set_defaults_for_tests) deliberately
+				# resets to the Customer Group tree's ROOT (a Group-type node)
+				# before every test run -- Customer's controller correctly
+				# rejects that, so this test needs a real leaf group of its own.
+				"customer_group": get_default_customer_group(),
 			}
 		)
 		existing_customer.insert(ignore_permissions=True)

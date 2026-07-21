@@ -20,7 +20,22 @@
 }
 
 .widget-title .ec-card-icon.ec-card-icon-lost {
-	--icon-stroke: var(--ec-lost);
-	--invert-neutral: var(--ec-lost);
-	color: var(--ec-lost);
+	--icon-stroke: var(--ec-deal-lost);
+	--invert-neutral: var(--ec-deal-lost);
+	color: var(--ec-deal-lost);
+}
+
+/* Tier 1 roadmap: colored stage pills on Lead/Deal list views (injected by
+   public/js/pipeline_list_colors.js). --ec-pill-color is set inline per
+   pill (one of the --ec-lead-*/--ec-deal-* tokens from theme.css) so this
+   one rule covers every stage rather than needing a class per stage name. */
+.ec-stage-pill {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.6;
+	color: var(--ec-pill-color);
+	background: color-mix(in srgb, var(--ec-pill-color) 15%, transparent);
 }
